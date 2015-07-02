@@ -6,9 +6,19 @@ Description: A Veritrans Payment Gateway plugin for Easy Digital Downloads
 Version: 1.0
 Author: Wendy kurniawan Soesanto
 Author URI: 
-Contributors: wendy0402
+Contributors: wendy0402, rizdaprasetya
+TODO :
+-parse customer details to VTWeb
+-add challenge payment status
+-frontend images
+-field label di backend
+-field notif url ala amazon di backend
+-bin?
+-installements?
+-tanya fitur list
 */
 
+//exit if opened directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 // registers the gateway
 function veritrans_register_gateway($gateways) {
@@ -202,7 +212,6 @@ function edd_veritrans_notification(){
 	}
 };
 add_action( 'edd_veritrans_notification', 'edd_veritrans_notification' );
-#TODO add action for veritrans notification
 
 function edd_listen_for_veritrans_notification() {
 	global $edd_options;
