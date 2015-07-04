@@ -12,15 +12,17 @@ TODO :
 -field label di backend
 -field notif url ala amazon di backend
 -cek kalo multiple item di cart, totalnya bener ga?
--bin?
--installements?
 -tanya fitur list
-Done (to be tested)
+DONE (to be tested)
 -add challenge payment status
 -add cancel payment status
 -parse customer details to VTWeb
 -3ds enabled option
 -payment enabled options
+
+Future TODO
+-bin?
+-installments?
 */
 
 //exit if opened directly
@@ -64,6 +66,16 @@ function add_edd_payment_statuses( $payment_statuses ) {
     return $payment_statuses;   
 }
 add_filter( 'edd_payment_statuses', 'add_edd_payment_statuses' );
+
+/**
+ * Register the payment icon
+ */
+function pw_edd_payment_icon($icons) {
+    $icons[plugin_dir_path(__FILE__).'/assets/logo/all_logo.png'] = 'Veritrans';
+    return $icons;
+}
+add_filter('edd_accepted_payment_icons', 'pw_edd_payment_icon');
+
 
 /**
  * Registers challenge statuses as post statuses so we can use them in Payment History navigation
@@ -151,14 +163,14 @@ function veritrans_add_settings($settings) {
 		array(
 			'id' => 'vt_production_api_key',
 			'name' => __('Production API Key', 'veritrans'),
-			'desc' => __('Enter your live API key, found in your production MAP Account Settings <br> (make sure to <strong>disable</strong> "Test Mode" settings above, if you wish to use production mode)', 'veritrans'),
+			'desc' => __('Enter your live server API key, found in your production  <a href="https://my.veritrans.co.id/settings/config_info">MAP Account Settings</a>  <br> (make sure to <strong>disable</strong> "Test Mode" settings above, if you wish to use production mode)', 'veritrans'),
 			'type' => 'text',
 			'size' => 'regular'
 		),
 		array(
 			'id' => 'vt_sandbox_api_key',
 			'name' => __('Sandbox API Key', 'veritrans'),
-			'desc' => __('Enter your test API key, found in your sandbox MAP Account Settings <br> (make sure to <strong>enable</strong> "Test Mode" settings above, if you wish to use sandbox mode)', 'veritrans'),
+			'desc' => __('Enter your test server API key, found in your sandbox <a href="https://my.sandbox.veritrans.co.id/settings/config_info">MAP Account Settings</a> <br> (make sure to <strong>enable</strong> "Test Mode" settings above, if you wish to use sandbox mode)', 'veritrans'),
 			'type' => 'text',
 			'size' => 'regular'
 		),
@@ -272,6 +284,7 @@ function edd_veritrans_payment($purchase_data) {
 		$purchase_summary = edd_get_purchase_summary($purchase_data);
  		error_log('purchase data: '.print_r($purchase_data,true)); //debugan
  		error_log('purchase summary: '.print_r($purchase_summary,true)); //debugan
+ 		error_log('plugin_dir_path : '.plugin_dir_path(__FILE__)); //debugan
 		/**********************************
 		* setup the payment details
 		**********************************/
@@ -404,12 +417,12 @@ function edd_veritrans_notification(){
 	require_once plugin_dir_path( __FILE__ ) . '/lib/Veritrans.php';
 	if(edd_is_test_mode()){
 		// set test credentials here
-		error_log('masuk test mode');
+		error_log('masuk test mode');  //debugan
 		Veritrans_Config::$serverKey = $edd_options['vt_sandbox_api_key'];
 		Veritrans_Config::$isProduction = false;
 	}else {
 		// set test credentials here
-		error_log('masuk production mode');
+		error_log('masuk production mode'); //debugan
 		Veritrans_Config::$serverKey = $edd_options['vt_production_api_key'];
 		Veritrans_Config::$isProduction = true;
 	}
