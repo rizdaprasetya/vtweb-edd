@@ -4,11 +4,10 @@ Plugin Name: Easy Digital Downloads - Veritrans Gateway
 Plugin URL: 
 Description: A Veritrans Payment Gateway plugin for Easy Digital Downloads
 Version: 1.0
-Author: Wendy kurniawan Soesanto
+Author: Wendy kurniawan Soesanto, Rizda Dwi Prasetya
 Author URI: 
 Contributors: wendy0402, rizdaprasetya
 TODO :
--field notif url ala amazon di backend
 
 DONE (to be tested) :
 -field label di backend
