@@ -314,9 +314,9 @@ function edd_veritrans_payment($purchase_data) {
 	if(!$errors) {
  
 		$purchase_summary = edd_get_purchase_summary($purchase_data);
- 		error_log('purchase data: '.print_r($purchase_data,true)); //debugan
- 		error_log('purchase summary: '.print_r($purchase_summary,true)); //debugan
- 		error_log('plugin_dir_path : '.plugin_dir_path(__FILE__)); //debugan
+ 		// error_log('purchase data: '.print_r($purchase_data,true)); //debugan
+ 		// error_log('purchase summary: '.print_r($purchase_summary,true)); //debugan
+ 		// error_log('plugin_dir_path : '.plugin_dir_path(__FILE__)); //debugan
 		/**********************************
 		* setup the payment details
 		**********************************/
@@ -375,7 +375,7 @@ function edd_veritrans_payment($purchase_data) {
    		// get rid of cart contents
 		edd_empty_cart();
 		// Redirect to veritrans
-		error_log('vt_params: '.print_r($vt_params,true)); //debugan
+		// error_log('vt_params: '.print_r($vt_params,true)); //debugan
 
 		wp_redirect( Veritrans_Vtweb::getRedirectionUrl($vt_params) );
 		exit;
@@ -400,13 +400,13 @@ function edd_get_vtpayment_ops()
 
 	//get 3ds opts from backend
 	Veritrans_Config::$is3ds = $edd_options['vt_3ds'] ? true : false;
-	error_log('vt_3ds '.$edd_options['vt_3ds']); //debugan
-	error_log('credit_card '.$edd_options['vt_credit_card']); //debugan
+	// error_log('vt_3ds '.$edd_options['vt_3ds']); //debugan
+	// error_log('credit_card '.$edd_options['vt_credit_card']); //debugan
 
     $enabled_payments = array();
     if ($edd_options['vt_credit_card']){
       $enabled_payments[] = 'credit_card';
-		error_log('masuk cc '.$edd_options['credit_card']); //debugan
+		// error_log('masuk cc '.$edd_options['credit_card']); //debugan
     }
     if ($edd_options['vt_mandiri_clickpay']){
       $enabled_payments[] = 'mandiri_clickpay';
@@ -438,7 +438,7 @@ function edd_get_vtpayment_ops()
     if ($edd_options['vt_indosat_dompetku']){
       $enabled_payments[] = 'indosat_dompetku';
     }
-    error_log('enabled payments array'.print_r($enabled_payments,true)); //debugan
+    // error_log('enabled payments array'.print_r($enabled_payments,true)); //debugan
     return $enabled_payments;
 }
 
@@ -449,12 +449,12 @@ function edd_veritrans_notification(){
 	require_once plugin_dir_path( __FILE__ ) . '/lib/Veritrans.php';
 	if(edd_is_test_mode()){
 		// set test credentials here
-		error_log('masuk test mode');  //debugan
+		// error_log('masuk test mode');  //debugan
 		Veritrans_Config::$serverKey = $edd_options['vt_sandbox_api_key'];
 		Veritrans_Config::$isProduction = false;
 	}else {
 		// set test credentials here
-		error_log('masuk production mode'); //debugan
+		// error_log('masuk production mode'); //debugan
 		Veritrans_Config::$serverKey = $edd_options['vt_production_api_key'];
 		Veritrans_Config::$isProduction = true;
 	}
@@ -462,7 +462,7 @@ function edd_veritrans_notification(){
 	// error_log('isProduction: '.Veritrans_Config::$isProduction); //debugan
 	
 	$notif = new Veritrans_Notification();
-	error_log('$notif '.print_r($notif)); //debugan
+	// error_log('$notif '.print_r($notif)); //debugan
 
 	$transaction = $notif->transaction_status;
 	$fraud = $notif->fraud_status;
@@ -476,20 +476,20 @@ function edd_veritrans_notification(){
 		if ($fraud == 'challenge') {
 		 	// TODO Set payment status in merchant's database to 'challenge'
 			edd_update_payment_status($order_id, 'challenge');
-			error_log('challenge gan!'); //debugan
+			// error_log('challenge gan!'); //debugan
 		}
 		else if ($fraud == 'accept') {
 		 	edd_update_payment_status($order_id, 'complete');
-			error_log('accepted gan!'); //debugan
+			// error_log('accepted gan!'); //debugan
 		}
 	}
 	else if ($transaction == 'cancel') {
 		edd_update_payment_status($order_id, 'cancel');
-			error_log('cancelled gan!'); //debugan
+			// error_log('cancelled gan!'); //debugan
 	}
 	else if ($transaction == 'deny') {
 	 	edd_update_payment_status($order_id, 'failed');
-			error_log('denied gan!'); //debugan
+			// error_log('denied gan!'); //debugan
 	}
 };
 add_action( 'edd_veritrans_notification', 'edd_veritrans_notification' );
