@@ -8,17 +8,17 @@ Author: Wendy kurniawan Soesanto
 Author URI: 
 Contributors: wendy0402, rizdaprasetya
 TODO :
--frontend images
--field label di backend
 -field notif url ala amazon di backend
--cek kalo multiple item di cart, totalnya bener ga?
--tanya fitur list
-DONE (to be tested)
+
+DONE (to be tested) :
+-field label di backend
+-frontend images
 -add challenge payment status
 -add cancel payment status
 -parse customer details to VTWeb
 -3ds enabled option
 -payment enabled options
+-cek kalo multiple item di cart, totalnya bener ga?
 
 Future TODO
 -bin?
@@ -71,7 +71,29 @@ add_filter( 'edd_payment_statuses', 'add_edd_payment_statuses' );
  * Register the payment icon
  */
 function pw_edd_payment_icon($icons) {
-    $icons[plugin_dir_path(__FILE__).'/assets/logo/all_logo.png'] = 'Veritrans';
+    $icons[plugins_url( 'assets/logo/bank_transfer.png', __FILE__ )] = 'Bank Transfer';
+    $icons[plugins_url( 'assets/logo/creditcard.png', __FILE__ )] = 'Credit Card';
+    $icons[plugins_url( 'assets/logo/mastercard.png', __FILE__ )] = 'Master Card';
+    $icons[plugins_url( 'assets/logo/visa.png', __FILE__ )] = 'Visa';
+    $icons[plugins_url( 'assets/logo/jcb.png', __FILE__ )] = 'JCB';
+    $icons[plugins_url( 'assets/logo/cimb_clicks.png', __FILE__ )] = 'CIMB Clicks';
+    $icons[plugins_url( 'assets/logo/cimb_niaga.png', __FILE__ )] = 'CIMB Niaga';
+    $icons[plugins_url( 'assets/logo/epay_bri.png', __FILE__ )] = 'E-Pay BRI';
+    $icons[plugins_url( 'assets/logo/bni.png', __FILE__ )] = 'BNI';
+    $icons[plugins_url( 'assets/logo/mandiri.png', __FILE__ )] = 'Mandiri';
+    $icons[plugins_url( 'assets/logo/mandiri_clickpay.png', __FILE__ )] = 'Mandiri Clickpay';
+    // $icons[plugins_url( 'assets/logo/mc_secure.png', __FILE__ )] = 'Master Card Secure';
+    $icons[plugins_url( 'assets/logo/permata.png', __FILE__ )] = 'Permata Bank';
+    $icons[plugins_url( 'assets/logo/permata_va.png', __FILE__ )] = 'Permata Virtual Account';
+    // $icons[plugins_url( 'assets/logo/triangle.png', __FILE__ )] = 'Triangle';
+    // $icons[plugins_url( 'assets/logo/verifiedbyvisa.png', __FILE__ )] = 'Verified by Visa';
+    $icons[plugins_url( 'assets/logo/telkomsel_cash.png', __FILE__ )] = 'TCash Telkomsel';
+    $icons[plugins_url( 'assets/logo/xl_tunai.png', __FILE__ )] = 'XL Tunai';
+    $icons[plugins_url( 'assets/logo/bbm.png', __FILE__ )] = 'BBM Money';
+    $icons[plugins_url( 'assets/logo/indosat_dompetku.png', __FILE__ )] = 'Indosat Dompetku';
+    $icons[plugins_url( 'assets/logo/indomaret.png', __FILE__ )] = 'Indomaret';
+    $icons[plugins_url( 'assets/logo/veritrans.png', __FILE__ )] = 'Veritrans 1';
+    $icons[plugins_url( 'assets/logo/vt_power.png', __FILE__ )] = 'Veritrans 2';
     return $icons;
 }
 add_filter('edd_accepted_payment_icons', 'pw_edd_payment_icon');
@@ -122,14 +144,16 @@ return;
 add_action('edd_veritrans_cc_form', 'veritrans_gateway_cc_form');
 
 
-// add form to display payment method images
+// add form to display payment method images **unused**
 function vt_payment_images_form() {
 
 	ob_start(); ?>
 
 	<fieldset id="edd_cc_fields" class="edd-veritrans-fields">
 		<p class="edd-veritrans-profile-wrapper">
-			<div>adadwadawdad</div>
+			<div>adadwadawdad</div>	
+			<img src= <?php echo '"'.plugins_url( 'assets/logo/mandiri.png', __FILE__ ).'"'; ?> alt="Mandiri" style='width:64px; height:64px'>
+			<img src="http://docs.veritrans.co.id/images/cc_icon.jpg" alt="CC">
 			<div>dadd</div>
 			<span class="edd-veritrans-profile-name"><?php echo $profile['name']; ?></span>
 		</p>
@@ -141,7 +165,7 @@ function vt_payment_images_form() {
 	$form = ob_get_clean();
 	echo $form;
 }
-add_action('edd_veritrans_cc_form', 'vt_payment_images_form');
+// add_action('edd_veritrans_cc_form', 'vt_payment_images_form');  //unused
 
 // adds the settings to the Payment Gateways section
 function veritrans_add_settings($settings) {
@@ -251,6 +275,15 @@ function veritrans_add_settings($settings) {
 			'name' => __('Accept Indosat Dompetku', 'veritrans'),
 			'desc' => __('Please contact us if you wish to enable this feature in Production'),
 			'type' => 'checkbox'
+		),
+		array(
+			'id'       => 'vt_notification_url',
+			'name'     => __( 'Veritrans payment notification URL', 'veritrans' ),
+			'desc'     => __( 'The payment notification URL to provide in your Veritrans MAP. Enter this under your <a href="https://my.sandbox.veritrans.co.id/settings/vtweb_configuration">MAP Settings configuration</a> (Sandbox mode) or <a href="https://my.veritrans.co.id/settings/vtweb_configuration">MAP Settings configuration</a> (Production mode)', 'veritrans' ),
+			'type'     => 'text',
+			'size'     => 'large',
+			'std'      => esc_url_raw( add_query_arg( array( 'edd-listener' => 'veritrans' ), home_url( 'index.php' ) ) ),
+			'faux'     => true,
 		),
 	);
  
