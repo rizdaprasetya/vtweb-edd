@@ -279,7 +279,7 @@ function veritrans_add_settings($settings) {
 		array(
 			'id'       => 'vt_notification_url',
 			'name'     => __( 'Veritrans payment notification URL', 'veritrans' ),
-			'desc'     => __( 'The payment notification URL to provide in your Veritrans MAP. Enter this under your <a href="https://my.sandbox.veritrans.co.id/settings/vtweb_configuration">MAP Settings configuration</a> (Sandbox mode) or <a href="https://my.veritrans.co.id/settings/vtweb_configuration">MAP Settings configuration</a> (Production mode)', 'veritrans' ),
+			'desc'     => __( 'The payment notification URL to provide in your Veritrans MAP. Copy this url to your <a href="https://my.sandbox.veritrans.co.id/settings/vtweb_configuration">MAP Settings configuration</a> (Sandbox mode) or <a href="https://my.veritrans.co.id/settings/vtweb_configuration">MAP Settings configuration</a> (Production mode)', 'veritrans' ),
 			'type'     => 'text',
 			'size'     => 'large',
 			'std'      => esc_url_raw( add_query_arg( array( 'edd-listener' => 'veritrans' ), home_url( 'index.php' ) ) ),
