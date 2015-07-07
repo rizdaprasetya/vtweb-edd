@@ -24,22 +24,22 @@ Payment Method Feature:
 
 The manual installation method involves downloading our feature-rich plugin and uploading it to your webserver via your favourite FTP application..
 
-1. Download the plugin file to your computer and unzip it
+1. [Download](https://github.com/rizdaprasetya/vtweb-edd/archive/master.zip) the plugin file to your computer and unzip it
 2. Using an FTP program, or your hosting control panel, upload the unzipped plugin folder to your WordPress installation `wp-content/plugins/` directory.
 3. Activate **Easy Digital Downloads - Veritrans Gateway** plugin from Plugin menu in your WordPress admin page.
 4. Insert `http://[YourWeb].com/?edd-listener=veritrans` link as the Payment Notification URL in your MAP configuration.
 5. Insert `http://[YourWeb].com` (or your desired URL) link as Finish/Unfinish/Error Redirect URL in your MAP configuration.
 
-#### Plugin COnfiguration
+#### Plugin Configuration
 In order to configure Veritrans plug-in:
 
 1. Access your WordPress admin page.
 2. Go to **Downloads - Settings** menu in the WordPress admin page, click **Payment Gateways** tab.
 3. In **Payment Gateways** option, scroll down to **Veritrans Gateway Settings**, then
 4. Input required fields below. (alternatively you may refer to image below) 
-  * **Checkout Label** : /<text that will be shown when customers pick payment options/>
-  * **Production API Key**: /<your production server key/> (leave blank if you dont have production account)
-  * **Sandbox API Key**: /<your sandbox server key/>
+  * **Checkout Label** : \<text that will be shown when customers pick payment options\>
+  * **Production API Key**: \<your production server key\> (leave blank if you dont have production account)
+  * **Sandbox API Key**: \<your sandbox server key\>
   * **Enable 3D Secure** : yes
 5. In **Veritrans Payment Channel** group setting, enable each payment channel you wish to accept.
 6. Optionally: scroll up and you may configure **Accepted Payment Method Icons** you wish to be shown.
