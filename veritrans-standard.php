@@ -483,6 +483,10 @@ function edd_veritrans_notification(){
 			// error_log('accepted gan!'); //debugan
 		}
 	}
+	else if ($notif->transaction_status != 'credit_card' && $transaction == 'settlement') {
+		edd_update_payment_status($order_id, 'complete');
+			// error_log('accepted gan!'); //debugan
+	}
 	else if ($transaction == 'cancel') {
 		edd_update_payment_status($order_id, 'cancel');
 			// error_log('cancelled gan!'); //debugan
